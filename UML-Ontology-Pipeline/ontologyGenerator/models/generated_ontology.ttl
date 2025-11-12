@@ -1,0 +1,139 @@
+@prefix : <http://example.org/ontology#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+:Person a :Class ;
+  rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :personId ; owl:cardinality "1" ] ,
+                 [ rdf:type owl:Restriction ; owl:onProperty :firstName ; owl:cardinality "1" ] ,
+                 [ rdf:type owl:Restriction ; owl:onProperty :lastName ; owl:cardinality "1" ] ,
+                 [ rdf:type owl:Restriction ; owl:onProperty :email ; owl:cardinality "0 1" ] ,
+                 [ rdf:type owl:Restriction ; owl:onProperty :dateOfBirth ; owl:cardinality "0 1" ] .
+
+:Student a :Class ;
+  rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :studentId ; owl:cardinality "1" ] ,
+                  [ rdf:type owl:Restriction ; owl:onProperty :enrollmentDate ; owl:cardinality "1" ] ,
+                  [ rdf:type owl:Restriction ; owl:onProperty :gpa ; owl:cardinality "0 1" ] ,
+                  :Person .
+
+:Professor a :Class ;
+  rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :employeeId ; owl:cardinality "1" ] ,
+                  [ rdf:type owl:Restriction ; owl:onProperty :department ; owl:cardinality "1" ] ,
+                  [ rdf:type owl:Restriction ; owl:onProperty :hireDate ; owl:cardinality "1" ] ,
+                  :Person .
+
+:Course a :Class ;
+  rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :courseId ; owl:cardinality "1" ] ,
+                  [ rdf:type owl:Restriction ; owl:onProperty :courseName ; owl:cardinality "1" ] ,
+                  [ rdf:type owl:Restriction ; owl:onProperty :credits ; owl:cardinality "1" ] ,
+                  [ rdf:type owl:Restriction ; owl:onProperty :description ; owl:cardinality "0 1" ] .
+
+:Department a :Class ;
+  rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :departmentId ; owl:cardinality "1" ] ,
+                  [ rdf:type owl:Restriction ; owl:onProperty :departmentName ; owl:cardinality "1" ] ,
+                  [ rdf:type owl:Restriction ; owl:onProperty :building ; owl:cardinality "0 1" ] .
+
+:Enrollment a :Class ;
+  rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :enrollmentId ; owl:cardinality "1" ] ,
+                  [ rdf:type owl:Restriction ; owl:onProperty :grade ; owl:cardinality "0 1" ] ,
+                  [ rdf:type owl:Restriction ; owl:onProperty :semester ; owl:cardinality "1" ] ,
+                  [ rdf:type owl:Restriction ; owl:onProperty :year ; owl:cardinality "1" ] .
+
+:personId a rdfs:Property ;
+  rdfs:domain :Person ;
+  rdfs:range :String .
+
+:firstName a rdfs:Property ;
+  rdfs:domain :Person ;
+  rdfs:range :String .
+
+:lastName a rdfs:Property ;
+  rdfs:domain :Person ;
+  rdfs:range :String .
+
+:email a rdfs:Property ;
+  rdfs:domain :Person ;
+  rdfs:range :String .
+
+:dateOfBirth a rdfs:Property ;
+  rdfs:domain :Person ;
+  rdfs:range :Date .
+
+:studentId a rdfs:Property ;
+  rdfs:domain :Student ;
+  rdfs:range :String .
+
+:enrollmentDate a rdfs:Property ;
+  rdfs:domain :Student ;
+  rdfs:range :Date .
+
+:gpa a rdfs:Property ;
+  rdfs:domain :Student ;
+  rdfs:range :Float .
+
+:employeeId a rdfs:Property ;
+  rdfs:domain :Professor ;
+  rdfs:range :String .
+
+:department a rdfs:Property ;
+  rdfs:domain :Professor ;
+  rdfs:range :Department .
+
+:hireDate a rdfs:Property ;
+  rdfs:domain :Professor ;
+  rdfs:range :Date .
+
+:courseId a rdfs:Property ;
+  rdfs:domain :Course ;
+  rdfs:range :String .
+
+:courseName a rdfs:Property ;
+  rdfs:domain :Course ;
+  rdfs:range :String .
+
+:credits a rdfs:Property ;
+  rdfs:domain :Course ;
+  rdfs:range :Integer .
+
+:description a rdfs:Property ;
+  rdfs:domain :Course ;
+  rdfs:range :String .
+
+:departmentId a rdfs:Property ;
+  rdfs:domain :Department ;
+  rdfs:range :String .
+
+:departmentName a rdfs:Property ;
+  rdfs:domain :Department ;
+  rdfs:range :String .
+
+:building a rdfs:Property ;
+  rdfs:domain :Department ;
+  rdfs:range :String .
+
+:enrollmentId a rdfs:Property ;
+  rdfs:domain :Enrollment ;
+  rdfs:range :String .
+
+:grade a rdfs:Property ;
+  rdfs:domain :Enrollment ;
+  rdfs:range :String .
+
+:semester a rdfs:Property ;
+  rdfs:domain :Enrollment ;
+  rdfs:range :String .
+
+:year a rdfs:Property ;
+  rdfs:domain :Enrollment ;
+  rdfs:range :Integer .
+
+:student a owl:ObjectProperty ;
+  rdfs:domain :Course ;
+  rdfs:range :Student ;
+
+:enrollment a owl:ObjectProperty ;
+  rdfs:domain :Course , :Professor ;
+  rdfs:range :Enrollment .
+
+:employs a owl:ObjectProperty ;
+  rdfs:domain :Department ;
+  rdfs:range :Professor .
