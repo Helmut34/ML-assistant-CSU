@@ -1,0 +1,3 @@
+#Requirements for the ontology generator module
+ollama>=0.1.0
+openai>=0.27.0

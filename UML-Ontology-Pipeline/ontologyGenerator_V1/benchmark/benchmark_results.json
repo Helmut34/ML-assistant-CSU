@@ -1,0 +1,15 @@
+[
+  {
+    "model": "llama3.1:8b",
+    "timestamp": "2025-11-12T17:28:58.783851",
+    "input_size_chars": 12035,
+    "input_size_kb": 11.7529296875,
+    "generation_time_seconds": 304.264,
+    "output_size_chars": 5796,
+    "output_size_kb": 5.66015625,
+    "success": true,
+    "error": null,
+    "tokens_generated": 1624,
+    "tokens_per_second": 5.34
+  }
+]

@@ -1,0 +1,186 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/university-model>
+    a owl:Ontology ;
+    rdfs:comment "University Domain Model" .
+
+<class_person>
+    a owl:Class ;
+    rdfs:label "Person" ;
+    rdfs:comment "A person in the university domain." .
+
+<attr_person_id>
+    a owl:DatatypeProperty ;
+    rdfs:label "personId" ;
+    rdfs:comment "The ID of a person." ;
+    rdfs:type xsd:string ;
+    owl:onProperty <http://example.org/university-model> ;
+    owl:withRestrictions [
+        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:maxCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+<attr_firstname>
+    a owl:DatatypeProperty ;
+    rdfs:label "firstName" ;
+    rdfs:comment "The first name of a person." ;
+    rdfs:type xsd:string ;
+    owl:onProperty <http://example.org/university-model> ;
+    owl:withRestrictions [
+        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:maxCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+<attr_lastname>
+    a owl:DatatypeProperty ;
+    rdfs:label "lastName" ;
+    rdfs:comment "The last name of a person." ;
+    rdfs:type xsd:string ;
+    owl:onProperty <http://example.org/university-model> ;
+    owl:withRestrictions [
+        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:maxCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+<attr_email>
+    a owl:DatatypeProperty ;
+    rdfs:label "email" ;
+    rdfs:comment "The email of a person." ;
+    rdfs:type xsd:string ;
+    owl:onProperty <http://example.org/university-model> ;
+    owl:withRestrictions [
+        owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:maxCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+<attr_dateofbirth>
+    a owl:DatatypeProperty ;
+    rdfs:label "dateOfBirth" ;
+    rdfs:comment "The date of birth of a person." ;
+    rdfs:type xsd:date ;
+    owl:onProperty <http://example.org/university-model> ;
+    owl:withRestrictions [
+        owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:maxCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+<class_student>
+    a owl:Class ;
+    rdfs:label "Student" ;
+    rdfs:comment "A student in the university domain." ;
+    rdfs:subClassOf <http://example.org/university-model#class_person> .
+
+<attr_studentid>
+    a owl:DatatypeProperty ;
+    rdfs:label "studentId" ;
+    rdfs:comment "The ID of a student." ;
+    rdfs:type xsd:string ;
+    owl:onProperty <http://example.org/university-model#class_student> ;
+    owl:withRestrictions [
+        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:maxCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+<attr_enrollmentdate>
+    a owl:DatatypeProperty ;
+    rdfs:label "enrollmentDate" ;
+    rdfs:comment "The enrollment date of a student." ;
+    rdfs:type xsd:date ;
+    owl:onProperty <http://example.org/university-model#class_student> ;
+    owl:withRestrictions [
+        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:maxCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+<attr_gpa>
+    a owl:DatatypeProperty ;
+    rdfs:label "gpa" ;
+    rdfs:comment "The GPA of a student." ;
+    rdfs:type xsd:float ;
+    owl:onProperty <http://example.org/university-model#class_student> ;
+    owl:withRestrictions [
+        owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:maxCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+<class_professor>
+    a owl:Class ;
+    rdfs:label "Professor" ;
+    rdfs:comment "A professor in the university domain." ;
+    rdfs:subClassOf <http://example.org/university-model#class_person> .
+
+<attr_employeeid>
+    a owl:DatatypeProperty ;
+    rdfs:label "employeeId" ;
+    rdfs:comment "The ID of a professor." ;
+    rdfs:type xsd:string ;
+    owl:onProperty <http://example.org/university-model#class_professor> ;
+    owl:withRestrictions [
+        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:maxCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+<attr_department>
+    a owl:DatatypeProperty ;
+    rdfs:label "department" ;
+    rdfs:comment "The department of a professor." ;
+    rdfs:type xsd:string ;
+    owl:onProperty <http://example.org/university-model#class_professor> ;
+    owl:withRestrictions [
+        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:maxCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+<class_course>
+    a owl:Class ;
+    rdfs:label "Course" ;
+    rdfs:comment "A course in the university domain." .
+
+<attr_courseid>
+    a owl:DatatypeProperty ;
+    rdfs:label "courseId" ;
+    rdfs:comment "The ID of a course." ;
+    rdfs:type xsd:string ;
+    owl:onProperty <http://example.org/university-model#class_course> ;
+    owl:withRestrictions [
+        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:maxCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+<class_enrollment>
+    a owl:Class ;
+    rdfs:label "Enrollment" ;
+    rdfs:comment "An enrollment in the university domain." .
+
+<attr_enrollmentid>
+    a owl:DatatypeProperty ;
+    rdfs:label "enrollmentId" ;
+    rdfs:comment "The ID of an enrollment." ;
+    rdfs:type xsd:string ;
+    owl:onProperty <http://example.org/university-model#class_enrollment> ;
+    owl:withRestrictions [
+        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:maxCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+<datatype_string>
+    a owl:Datatype ;
+    rdfs:label "String" ;
+    rdfs:comment "A string data type." .
+
+<datatype_integer>
+    a owl:Datatype ;
+    rdfs:label "Integer" ;
+    rdfs:comment "An integer data type." .
+
+<datatype_float>
+    a owl:Datatype ;
+    rdfs:label "Float" ;
+    rdfs:comment "A float data type." .
+
+<datatype_date>
+    a owl:Datatype ;
+    rdfs:label "Date" ;
+    rdfs:comment "A date data type." .
