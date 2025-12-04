@@ -1,6 +1,6 @@
 """
-GPT-4 Model integration for V1 pipeline: UML ’ UML Code ’ Ontology.
-Uses OpenAI API for benchmarking purposes.
+GPT-4 Model integration for V2 pipeline: UML â†’ UML Code â†’ Taxonomy â†’ Ontology.
+Uses OpenAI API for three-step transformation.
 
 Author: Helmut Cespedes
 """
@@ -63,12 +63,61 @@ Respond ONLY with the structured UML code, no explanations.
         raise RuntimeError(f"Error converting UML to code: {e}")
 
 
-def code_to_ontology(uml_code: str, model: str = "gpt-4", api_key: str = None) -> str:
+def code_to_taxonomy(uml_code: str, model: str = "gpt-4", api_key: str = None) -> str:
     """
-    Convert structured UML code to OWL ontology.
+    Convert structured UML code to taxonomy (hierarchical classification).
 
     Args:
         uml_code (str): Structured UML code representation.
+        model (str): The GPT model to use.
+        api_key (str): OpenAI API key (if None, uses OPENAI_API_KEY env var).
+
+    Returns:
+        str: Taxonomy representation in a structured format.
+    """
+    if api_key:
+        openai.api_key = api_key
+    elif os.getenv("OPENAI_API_KEY"):
+        openai.api_key = os.getenv("OPENAI_API_KEY")
+
+    prompt = f"""You are an expert in knowledge organization and taxonomy design.
+Convert the following structured UML code into a taxonomy (hierarchical classification system).
+
+A taxonomy should:
+1. Identify the main concepts and their hierarchical relationships
+2. Organize classes into broader and narrower terms
+3. Group related concepts together
+4. Define clear parent-child relationships
+5. Include properties as characteristics of concepts
+
+Format the taxonomy in a clear, hierarchical text format using indentation.
+
+UML Code:
+{uml_code}
+
+Respond ONLY with the taxonomy in hierarchical format, no explanations.
+"""
+
+    try:
+        response = openai.ChatCompletion.create(
+            model=model,
+            messages=[
+                {"role": "system", "content": "You are an expert in knowledge organization."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.3
+        )
+        return response.choices[0].message.content.strip()
+    except Exception as e:
+        raise RuntimeError(f"Error converting code to taxonomy: {e}")
+
+
+def taxonomy_to_ontology(taxonomy: str, model: str = "gpt-4", api_key: str = None) -> str:
+    """
+    Convert taxonomy to full OWL ontology.
+
+    Args:
+        taxonomy (str): Taxonomy representation.
         model (str): The GPT model to use.
         api_key (str): OpenAI API key (if None, uses OPENAI_API_KEY env var).
 
@@ -81,18 +130,19 @@ def code_to_ontology(uml_code: str, model: str = "gpt-4", api_key: str = None) -
         openai.api_key = os.getenv("OPENAI_API_KEY")
 
     prompt = f"""You are an expert in creating OWL ontologies.
-Convert the following structured UML code into an OWL ontology in Turtle format.
+Convert the following taxonomy into a complete OWL ontology in Turtle format.
 
 Requirements:
 1. Use proper OWL/RDFS namespaces (owl:, rdfs:, rdf:)
-2. Convert classes to owl:Class
-3. Preserve inheritance with rdfs:subClassOf
+2. Convert concepts to owl:Class
+3. Preserve hierarchical relationships with rdfs:subClassOf
 4. Define properties as owl:DatatypeProperty or owl:ObjectProperty
 5. Include cardinality constraints using owl:Restriction
-6. Maintain all associations and multiplicities
+6. Add SKOS annotations for taxonomy terms (skos:broader, skos:narrower)
+7. Include rdfs:label and rdfs:comment for documentation
 
-UML Code:
-{uml_code}
+Taxonomy:
+{taxonomy}
 
 Respond ONLY with the OWL ontology in Turtle format, without explanations.
 """
@@ -108,17 +158,17 @@ Respond ONLY with the OWL ontology in Turtle format, without explanations.
         )
         return response.choices[0].message.content.strip()
     except Exception as e:
-        raise RuntimeError(f"Error converting code to ontology: {e}")
+        raise RuntimeError(f"Error converting taxonomy to ontology: {e}")
 
 
-def generate_ontology_with_gpt4_v1(
+def generate_ontology_with_gpt4_v2(
     uml: str,
     model: str = "gpt-4",
     api_key: str = None,
     benchmark: bool = True
-) -> Union[Tuple[str, str], Tuple[str, str, Dict]]:
+) -> Union[Tuple[str, str, str], Tuple[str, str, str, Dict]]:
     """
-    Generate OWL ontology from UML using V1 pipeline: UML ’ UML Code ’ Ontology.
+    Generate OWL ontology from UML using V2 pipeline: UML â†’ UML Code â†’ Taxonomy â†’ Ontology.
 
     Args:
         uml (str): The UML diagram in XMI format.
@@ -127,12 +177,12 @@ def generate_ontology_with_gpt4_v1(
         benchmark (bool): Whether to collect benchmarking metrics.
 
     Returns:
-        If benchmark=True: (uml_code, ontology, metrics_dict)
-        If benchmark=False: (uml_code, ontology)
+        If benchmark=True: (uml_code, taxonomy, ontology, metrics_dict)
+        If benchmark=False: (uml_code, taxonomy, ontology)
     """
     metrics = {
         "model": model,
-        "pipeline": "V1 (UML ’ Code ’ Ontology)",
+        "pipeline": "V2 (UML â†’ Code â†’ Taxonomy â†’ Ontology)",
         "timestamp": datetime.now().isoformat(),
         "input_size_chars": len(uml),
         "input_size_kb": len(uml.encode('utf-8')) / 1024,
@@ -141,36 +191,44 @@ def generate_ontology_with_gpt4_v1(
     try:
         overall_start = time.time()
 
-        # Step 1: UML ’ UML Code
+        # Step 1: UML â†’ UML Code
         step1_start = time.time()
         uml_code = uml_to_code(uml, model, api_key)
         step1_time = time.time() - step1_start
 
-        # Step 2: UML Code ’ Ontology
+        # Step 2: UML Code â†’ Taxonomy
         step2_start = time.time()
-        ontology = code_to_ontology(uml_code, model, api_key)
+        taxonomy = code_to_taxonomy(uml_code, model, api_key)
         step2_time = time.time() - step2_start
+
+        # Step 3: Taxonomy â†’ Ontology
+        step3_start = time.time()
+        ontology = taxonomy_to_ontology(taxonomy, model, api_key)
+        step3_time = time.time() - step3_start
 
         total_time = time.time() - overall_start
 
         if benchmark:
             metrics.update({
                 "step1_uml_to_code_seconds": round(step1_time, 3),
-                "step2_code_to_ontology_seconds": round(step2_time, 3),
+                "step2_code_to_taxonomy_seconds": round(step2_time, 3),
+                "step3_taxonomy_to_ontology_seconds": round(step3_time, 3),
                 "total_generation_time_seconds": round(total_time, 3),
                 "intermediate_code_size_chars": len(uml_code),
                 "intermediate_code_size_kb": len(uml_code.encode('utf-8')) / 1024,
+                "intermediate_taxonomy_size_chars": len(taxonomy),
+                "intermediate_taxonomy_size_kb": len(taxonomy.encode('utf-8')) / 1024,
                 "output_size_chars": len(ontology),
                 "output_size_kb": len(ontology.encode('utf-8')) / 1024,
                 "success": True,
                 "error": None
             })
-            return uml_code, ontology, metrics
+            return uml_code, taxonomy, ontology, metrics
         else:
-            return uml_code, ontology
+            return uml_code, taxonomy, ontology
 
     except Exception as e:
-        error_msg = f"Error in V1 pipeline with GPT-4: {e}"
+        error_msg = f"Error in V2 pipeline with GPT-4: {e}"
         print(error_msg)
 
         if benchmark:
@@ -181,12 +239,12 @@ def generate_ontology_with_gpt4_v1(
                 "success": False,
                 "error": str(e)
             })
-            return "", "", metrics
+            return "", "", "", metrics
         else:
-            return "", ""
+            return "", "", ""
 
 
-def save_benchmark_results(metrics: dict, output_file: str = "benchmark_results_v1.json") -> None:
+def save_benchmark_results(metrics: dict, output_file: str = "benchmark_results_v2.json") -> None:
     """
     Save benchmark metrics to a JSON file (append mode).
 
@@ -206,7 +264,7 @@ def save_benchmark_results(metrics: dict, output_file: str = "benchmark_results_
         with open(output_file, "w") as f:
             json.dump(results, f, indent=2)
 
-        print(f"V1 Benchmark results saved to {output_file}")
+        print(f"V2 Benchmark results saved to {output_file}")
 
     except Exception as e:
         print(f"Error saving benchmark results: {e}")
@@ -214,13 +272,13 @@ def save_benchmark_results(metrics: dict, output_file: str = "benchmark_results_
 
 def print_metrics(metrics: dict) -> None:
     """
-    Pretty print V1 pipeline benchmark metrics.
+    Pretty print V2 pipeline benchmark metrics.
 
     Args:
         metrics (dict): The metrics dictionary to print.
     """
     print("\n" + "="*60)
-    print("BENCHMARK RESULTS - GPT-4 V1 PIPELINE")
+    print("BENCHMARK RESULTS - GPT-4 V2 PIPELINE")
     print("="*60)
     print(f"Model: {metrics['model']}")
     print(f"Pipeline: {metrics['pipeline']}")
@@ -232,14 +290,19 @@ def print_metrics(metrics: dict) -> None:
     if 'intermediate_code_size_chars' in metrics:
         print(f"Intermediate Code: {metrics['intermediate_code_size_chars']} chars ({metrics['intermediate_code_size_kb']:.2f} KB)")
 
+    if 'intermediate_taxonomy_size_chars' in metrics:
+        print(f"Intermediate Taxonomy: {metrics['intermediate_taxonomy_size_chars']} chars ({metrics['intermediate_taxonomy_size_kb']:.2f} KB)")
+
     if 'output_size_chars' in metrics:
         print(f"Output Size: {metrics['output_size_chars']} chars ({metrics['output_size_kb']:.2f} KB)")
 
     print("="*60)
     if 'step1_uml_to_code_seconds' in metrics:
-        print(f"Step 1 (UML ’ Code): {metrics['step1_uml_to_code_seconds']} seconds")
-    if 'step2_code_to_ontology_seconds' in metrics:
-        print(f"Step 2 (Code ’ Ontology): {metrics['step2_code_to_ontology_seconds']} seconds")
+        print(f"Step 1 (UML â†’ Code): {metrics['step1_uml_to_code_seconds']} seconds")
+    if 'step2_code_to_taxonomy_seconds' in metrics:
+        print(f"Step 2 (Code â†’ Taxonomy): {metrics['step2_code_to_taxonomy_seconds']} seconds")
+    if 'step3_taxonomy_to_ontology_seconds' in metrics:
+        print(f"Step 3 (Taxonomy â†’ Ontology): {metrics['step3_taxonomy_to_ontology_seconds']} seconds")
     if 'total_generation_time_seconds' in metrics:
         print(f"Total Time: {metrics['total_generation_time_seconds']} seconds")
 
@@ -254,8 +317,8 @@ if __name__ == "__main__":
     with open("../UML-test/test1.xml", "r") as f:
         uml_xmi = f.read()
 
-    print("Generating ontology with GPT-4 V1 Pipeline...")
-    uml_code, ontology_ttl, metrics = generate_ontology_with_gpt4_v1(
+    print("Generating ontology with GPT-4 V2 Pipeline...")
+    uml_code, taxonomy, ontology_ttl, metrics = generate_ontology_with_gpt4_v2(
         uml_xmi,
         model="gpt-4",
         benchmark=True
@@ -264,13 +327,18 @@ if __name__ == "__main__":
     print_metrics(metrics)
 
     if uml_code:
-        with open("../benchmark/gpt4_v1_uml_code.txt", "w") as f:
+        with open("../benchmark/gpt4_v2_uml_code.txt", "w") as f:
             f.write(uml_code)
-        print("UML code saved to ../benchmark/gpt4_v1_uml_code.txt")
+        print("UML code saved to ../benchmark/gpt4_v2_uml_code.txt")
+
+    if taxonomy:
+        with open("../benchmark/gpt4_v2_taxonomy.txt", "w") as f:
+            f.write(taxonomy)
+        print("Taxonomy saved to ../benchmark/gpt4_v2_taxonomy.txt")
 
     if ontology_ttl:
-        with open("../benchmark/gpt4_v1_ontology.ttl", "w") as f:
+        with open("../benchmark/gpt4_v2_ontology.ttl", "w") as f:
             f.write(ontology_ttl)
-        print("Ontology saved to ../benchmark/gpt4_v1_ontology.ttl")
+        print("Ontology saved to ../benchmark/gpt4_v2_ontology.ttl")
 
-    save_benchmark_results(metrics, "../benchmark/gpt4_v1_benchmark.json")
+    save_benchmark_results(metrics, "../benchmark/gpt4_v2_benchmark.json")

@@ -1,0 +1,38 @@
+# Generated diagram files
+generated_diagrams/png/*.png
+generated_diagrams/svg/*.svg
+generated_diagrams/xmi/*.xml
+generated_diagrams/xmi/*.xmi
+
+# But keep directory structure
+!generated_diagrams/png/.gitkeep
+!generated_diagrams/svg/.gitkeep
+!generated_diagrams/xmi/.gitkeep
+
+# PlantUML cache
+.plantuml
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+.venv
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

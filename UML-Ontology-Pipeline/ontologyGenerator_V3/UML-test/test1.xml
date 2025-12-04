@@ -1,0 +1,191 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.1">
+    <xmi:Documentation exporter="Enterprise Architect" exporterVersion="6.5"/>
+    
+    <!-- University Domain Model -->
+    <uml:Model xmi:type="uml:Model" xmi:id="model_001" name="UniversityModel">
+        
+        <!-- Person Class -->
+        <packagedElement xmi:type="uml:Class" xmi:id="class_person" name="Person">
+            <ownedAttribute xmi:id="attr_person_id" name="personId" type="datatype_string">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="attr_firstname" name="firstName" type="datatype_string">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="attr_lastname" name="lastName" type="datatype_string">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="attr_email" name="email" type="datatype_string">
+                <lowerValue xmi:type="uml:LiteralInteger" value="0"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="attr_dateofbirth" name="dateOfBirth" type="datatype_date">
+                <lowerValue xmi:type="uml:LiteralInteger" value="0"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+        </packagedElement>
+        
+        <!-- Student Class (inherits from Person) -->
+        <packagedElement xmi:type="uml:Class" xmi:id="class_student" name="Student">
+            <generalization xmi:type="uml:Generalization" xmi:id="gen_student_person" general="class_person"/>
+            <ownedAttribute xmi:id="attr_studentid" name="studentId" type="datatype_string">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="attr_enrollmentdate" name="enrollmentDate" type="datatype_date">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="attr_gpa" name="gpa" type="datatype_float">
+                <lowerValue xmi:type="uml:LiteralInteger" value="0"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+        </packagedElement>
+        
+        <!-- Professor Class (inherits from Person) -->
+        <packagedElement xmi:type="uml:Class" xmi:id="class_professor" name="Professor">
+            <generalization xmi:type="uml:Generalization" xmi:id="gen_professor_person" general="class_person"/>
+            <ownedAttribute xmi:id="attr_employeeid" name="employeeId" type="datatype_string">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="attr_department" name="department" type="datatype_string">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="attr_hiredate" name="hireDate" type="datatype_date">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+        </packagedElement>
+        
+        <!-- Course Class -->
+        <packagedElement xmi:type="uml:Class" xmi:id="class_course" name="Course">
+            <ownedAttribute xmi:id="attr_courseid" name="courseId" type="datatype_string">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="attr_coursename" name="courseName" type="datatype_string">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="attr_credits" name="credits" type="datatype_integer">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="attr_description" name="description" type="datatype_string">
+                <lowerValue xmi:type="uml:LiteralInteger" value="0"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+        </packagedElement>
+        
+        <!-- Department Class -->
+        <packagedElement xmi:type="uml:Class" xmi:id="class_department" name="Department">
+            <ownedAttribute xmi:id="attr_deptid" name="departmentId" type="datatype_string">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="attr_deptname" name="departmentName" type="datatype_string">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="attr_building" name="building" type="datatype_string">
+                <lowerValue xmi:type="uml:LiteralInteger" value="0"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+        </packagedElement>
+        
+        <!-- Enrollment Association Class -->
+        <packagedElement xmi:type="uml:Class" xmi:id="class_enrollment" name="Enrollment">
+            <ownedAttribute xmi:id="attr_enrollmentid" name="enrollmentId" type="datatype_string">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="attr_grade" name="grade" type="datatype_string">
+                <lowerValue xmi:type="uml:LiteralInteger" value="0"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="attr_semester" name="semester" type="datatype_string">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="attr_year" name="year" type="datatype_integer">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedAttribute>
+        </packagedElement>
+        
+        <!-- Associations -->
+        <packagedElement xmi:type="uml:Association" xmi:id="assoc_student_enrollment" name="enrollsIn">
+            <memberEnd xmi:idref="assoc_student_enrollment_student"/>
+            <memberEnd xmi:idref="assoc_student_enrollment_enrollment"/>
+            <ownedEnd xmi:type="uml:Property" xmi:id="assoc_student_enrollment_student" 
+                      name="student" type="class_student" association="assoc_student_enrollment">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedEnd>
+            <ownedEnd xmi:type="uml:Property" xmi:id="assoc_student_enrollment_enrollment" 
+                      name="enrollments" type="class_enrollment" association="assoc_student_enrollment">
+                <lowerValue xmi:type="uml:LiteralInteger" value="0"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="*"/>
+            </ownedEnd>
+        </packagedElement>
+        
+        <packagedElement xmi:type="uml:Association" xmi:id="assoc_course_enrollment" name="hasEnrollments">
+            <memberEnd xmi:idref="assoc_course_enrollment_course"/>
+            <memberEnd xmi:idref="assoc_course_enrollment_enrollment"/>
+            <ownedEnd xmi:type="uml:Property" xmi:id="assoc_course_enrollment_course" 
+                      name="course" type="class_course" association="assoc_course_enrollment">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedEnd>
+            <ownedEnd xmi:type="uml:Property" xmi:id="assoc_course_enrollment_enrollment" 
+                      name="enrollments" type="class_enrollment" association="assoc_course_enrollment">
+                <lowerValue xmi:type="uml:LiteralInteger" value="0"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="*"/>
+            </ownedEnd>
+        </packagedElement>
+        
+        <packagedElement xmi:type="uml:Association" xmi:id="assoc_professor_course" name="teaches">
+            <memberEnd xmi:idref="assoc_professor_course_professor"/>
+            <memberEnd xmi:idref="assoc_professor_course_course"/>
+            <ownedEnd xmi:type="uml:Property" xmi:id="assoc_professor_course_professor" 
+                      name="professor" type="class_professor" association="assoc_professor_course">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedEnd>
+            <ownedEnd xmi:type="uml:Property" xmi:id="assoc_professor_course_course" 
+                      name="courses" type="class_course" association="assoc_professor_course">
+                <lowerValue xmi:type="uml:LiteralInteger" value="0"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="*"/>
+            </ownedEnd>
+        </packagedElement>
+        
+        <packagedElement xmi:type="uml:Association" xmi:id="assoc_department_professor" name="employs">
+            <memberEnd xmi:idref="assoc_department_professor_department"/>
+            <memberEnd xmi:idref="assoc_department_professor_professor"/>
+            <ownedEnd xmi:type="uml:Property" xmi:id="assoc_department_professor_department" 
+                      name="department" type="class_department" association="assoc_department_professor">
+                <lowerValue xmi:type="uml:LiteralInteger" value="1"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="1"/>
+            </ownedEnd>
+            <ownedEnd xmi:type="uml:Property" xmi:id="assoc_department_professor_professor" 
+                      name="professors" type="class_professor" association="assoc_department_professor">
+                <lowerValue xmi:type="uml:LiteralInteger" value="0"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" value="*"/>
+            </ownedEnd>
+        </packagedElement>
+        
+        <!-- Data Types -->
+        <packagedElement xmi:type="uml:DataType" xmi:id="datatype_string" name="String"/>
+        <packagedElement xmi:type="uml:DataType" xmi:id="datatype_integer" name="Integer"/>
+        <packagedElement xmi:type="uml:DataType" xmi:id="datatype_float" name="Float"/>
+        <packagedElement xmi:type="uml:DataType" xmi:id="datatype_date" name="Date"/>
+        
+    </uml:Model>
+</xmi:XMI>

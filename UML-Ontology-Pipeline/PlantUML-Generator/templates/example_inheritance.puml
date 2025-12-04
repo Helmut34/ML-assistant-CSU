@@ -1,0 +1,32 @@
+@startuml inheritance_example
+' Inheritance example
+' TODO: Customize this template
+
+title Inheritance Hierarchy Example
+
+abstract class Animal {
+  - name: String
+  - age: Integer
+  --
+  + {abstract} makeSound(): String
+  + getName(): String
+}
+
+class Dog {
+  - breed: String
+  --
+  + makeSound(): String
+  + fetch(): void
+}
+
+class Cat {
+  - indoor: Boolean
+  --
+  + makeSound(): String
+  + climb(): void
+}
+
+Animal <|-- Dog
+Animal <|-- Cat
+
+@enduml

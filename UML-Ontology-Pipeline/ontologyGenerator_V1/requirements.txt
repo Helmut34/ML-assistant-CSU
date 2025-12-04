@@ -1,3 +1,22 @@
-#Requirements for the ontology generator module
+# Requirements for the ontology generator V1 module
+
+# LLM Integration
 ollama>=0.1.0
-openai>=0.27.0
+openai>=1.0.0
+
+# Data Processing
+rdflib>=6.0.0
+owlrl>=6.0.0
+
+# Graph Database (for future Neo4j integration)
+neo4j>=5.0.0
+neosemantics>=0.1.0
+
+# Semantic Similarity & Embeddings
+gensim>=4.0.0
+scikit-learn>=1.0.0
+numpy>=1.20.0
+
+# Utilities
+python-dotenv>=0.19.0
+requests>=2.26.0

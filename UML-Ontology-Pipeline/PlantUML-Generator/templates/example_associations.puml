@@ -1,0 +1,29 @@
+@startuml associations_example
+' Association patterns example
+' TODO: Customize this template
+
+title Association Patterns Example
+
+class Library {
+  - libraryId: String
+  - name: String
+}
+
+class Book {
+  - isbn: String
+  - title: String
+  - year: Integer
+}
+
+class Author {
+  - authorId: String
+  - name: String
+}
+
+' One-to-many: Library has many Books
+Library "1" -- "0..*" Book : contains >
+
+' Many-to-many: Book can have many Authors
+Book "1..*" -- "1..*" Author : written by >
+
+@enduml

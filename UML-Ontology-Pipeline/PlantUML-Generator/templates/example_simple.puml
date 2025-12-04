@@ -1,0 +1,22 @@
+@startuml simple_example
+' Simple class diagram example
+' TODO: Customize this template
+
+title Simple Class Diagram Example
+
+class Person {
+  - personId: String
+  - firstName: String
+  - lastName: String
+  - email: String
+  --
+  + getFullName(): String
+  + getEmail(): String
+}
+
+note right of Person
+  This is a simple example.
+  Customize for your domain.
+end note
+
+@enduml

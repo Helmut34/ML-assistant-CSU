@@ -1,0 +1,29 @@
+# Requirements for the ontology generator V3 module (Custom Proprietary Model)
+
+# Custom Model Integration (to be added based on your proprietary model)
+# Add your custom model dependencies here
+
+# Data Processing
+rdflib>=6.0.0
+owlrl>=6.0.0
+
+# Graph Database (for Neo4j integration)
+neo4j>=5.0.0
+neosemantics>=0.1.0
+
+# Semantic Similarity & Embeddings (for taxonomy alignment)
+gensim>=4.0.0
+scikit-learn>=1.0.0
+numpy>=1.20.0
+scipy>=1.7.0
+
+# Graph Embeddings
+node2vec>=0.4.0
+networkx>=2.6.0
+
+# SKOS/Taxonomy Support
+skos>=0.1.0
+
+# Utilities
+python-dotenv>=0.19.0
+requests>=2.26.0
